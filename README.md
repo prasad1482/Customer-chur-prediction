@@ -49,7 +49,7 @@ The notebook saves the following artifacts under `models/`:
 The project roadmap includes:
 1. **FastAPI** - expose the saved model as a REST API for integration.
 2. **Streamlit** - build a user-friendly interface for business users to enter customer details and see churn predictions with explanations.
-3. **Docker** - containerize the API and UI so the app runs consistently anywhere.
+3. **Docker** - containerize the API so the app runs consistently anywhere.
 4. **Deployment** - deploy the app to a hosting provider such as Render for a live demo.
 
 ## How to Run
@@ -62,8 +62,30 @@ cd "C:/Users/hp/Desktop/ntg/Customer chur prediction"
 ```bash
 pip install -r requirements.txt
 ```
-3. Open and run `2.ipynb` to retrain models and generate SHAP plots.
+3. Run the FastAPI backend:
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port 8080
+```
+4. Run the Streamlit UI in a separate terminal:
+```bash
+streamlit run streamlit_app.py
+```
+
+## Docker
+Build the container locally:
+```bash
+docker build -t churn-predictor .
+```
+Run the container:
+```bash
+docker run -p 8080:8080 churn-predictor
+```
+The API will be available at `http://localhost:8080`.
+
+## Deployment
+For deployment on Render or another container host, use the provided `Dockerfile`. The container exposes port `8080` and runs the API by default.
 
 ## Notes
-- Ensure the notebook kernel uses the same Python environment where packages like `shap`, `xgboost`, and `scikit-learn` are installed.
-- The current accuracy is modest, so future improvement should focus on feature engineering, hyperparameter tuning, and model explainability.
+- The FastAPI endpoint accepts business-friendly string values for `Gender`, `Subscription_Type`, and `Contract_Length`.
+- The Streamlit app can be used by non-technical stakeholders to enter customer details and see churn probability plus SHAP feature explanations.
+- The model was trained with label encoding for categorical data, so the API and UI use the same mappings.
