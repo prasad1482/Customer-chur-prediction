@@ -5,7 +5,7 @@ import pandas as pd
 from datetime import datetime
 
 import os
-API_URL = os.getenv("API_URL", "https://churn-predictor-api.onrender.com/predict")
+API_URL = os.getenv("API_URL", "https://customer-chur-prediction-1.onrender.com/")
 # Page config
 st.set_page_config(
     page_title="Customer Churn Predictor",
