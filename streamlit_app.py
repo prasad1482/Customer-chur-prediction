@@ -1,7 +1,10 @@
+import os
 import streamlit as st
 import requests
 import pandas as pd
 from datetime import datetime
+
+API_URL = os.getenv("API_URL", "http://127.0.0.1:8000/predict")
 
 # Page config
 st.set_page_config(

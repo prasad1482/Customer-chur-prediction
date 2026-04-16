@@ -1,0 +1,22 @@
+services:
+  api:
+    build: .
+    container_name: churn-api
+    ports:
+      - "8000:8000"
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    volumes:
+      - ./:/app
+
+  ui:
+    build: .
+    container_name: churn-ui
+    ports:
+      - "8501:8501"
+    environment:
+      - API_URL=http://api:8000/predict
+    command: streamlit run /app/streamlit_app.py --server.address=0.0.0.0 --server.port=8501
+    depends_on:
+      - api
+    volumes:
+      - ./:/app
