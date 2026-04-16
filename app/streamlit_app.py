@@ -4,8 +4,8 @@ import requests
 import pandas as pd
 from datetime import datetime
 
-API_URL = os.getenv("API_URL", "http://127.0.0.1:8000/predict")
-
+import os
+API_URL = os.getenv("API_URL", "https://churn-predictor-api.onrender.com/predict")
 # Page config
 st.set_page_config(
     page_title="Customer Churn Predictor",
